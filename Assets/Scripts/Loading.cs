@@ -7,7 +7,7 @@ namespace UnityTask.BasketballProject
     {
         private void Start()
         {
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
