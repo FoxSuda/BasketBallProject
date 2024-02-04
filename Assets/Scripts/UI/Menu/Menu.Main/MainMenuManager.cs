@@ -1,29 +1,38 @@
+using Doozy.Runtime.UIManager.Animators;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UnityTask.BasketballProject
 {
     public class MainMenuManager : MonoBehaviour
     {
-        [SerializeField] private GameObject _mainMenuObject;
-        [SerializeField] private GameObject _settingsObject;
-        [SerializeField] private GameObject _customizationObject;
+        [SerializeField] private UIContainerUIAnimator _settingsObject;
+        [SerializeField] private UIContainerUIAnimator _customizationObject;
+        [SerializeField] private UIContainerUIAnimator _InGameMenuObject;
+
+        private UIContainerUIAnimator _animator;
+
+        private void Awake()
+        {
+            _animator = gameObject.GetComponent<UIContainerUIAnimator>();
+            _animator.Show();
+        }
 
         public void StartGame()
         {
-            SceneManager.LoadScene("Main");
+            _animator.Hide();
+            _InGameMenuObject.Show();
         }
 
         public void OpenSettings()
         {
-            _mainMenuObject.SetActive(false);
-            _settingsObject.SetActive(true);
+            _animator.Hide();
+            _settingsObject.Show();
         }
 
         public void OpenCustomization()
         {
-            _mainMenuObject.SetActive(false);
-            _customizationObject.SetActive(true);
+            _animator.Hide();
+            _customizationObject.Show();
         }
 
         public void ExitGame()

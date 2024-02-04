@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace UnityTask.BasketballProject
 {
-    public class SettingsMenuManager : MonoBehaviour
+    public class InGameMenuManager : MonoBehaviour
     {
-
         [SerializeField] private UIContainerUIAnimator _mainMenuObject;
+        [SerializeField] private CoinsCountTextChange _coinsCountTextChange;
 
         private UIContainerUIAnimator _animator;
 
@@ -18,13 +18,13 @@ namespace UnityTask.BasketballProject
 
         public void BackToMainMenu()
         {
-            _mainMenuObject.Show();
             _animator.Hide();
+            _mainMenuObject.Show();
         }
 
-        public void ApplyChanges()
+        private void CoinCountChange(int coinValue)
         {
-            return;
+            _coinsCountTextChange.ChangeTextCoinsCount(coinValue);
         }
     }
 }

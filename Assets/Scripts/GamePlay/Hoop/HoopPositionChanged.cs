@@ -4,7 +4,7 @@ namespace UnityTask.BasketballProject
 {
     public class HoopPositionChanged : MonoBehaviour
     {
-        [SerializeField] Ball _ball;
+        [SerializeField] private Ball _ball;
 
         private void Awake()
         {
