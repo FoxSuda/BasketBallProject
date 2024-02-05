@@ -9,7 +9,7 @@ namespace UnityTask.BasketballProject
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject.TryGetComponent(out Ball ball))
+            if(other.gameObject.TryGetComponent(out BallManager ball))
             {
                 _bottomCircleTrigger.GetComponent<BallHitCircleCheck>().BallHitsValidation(true);
             }

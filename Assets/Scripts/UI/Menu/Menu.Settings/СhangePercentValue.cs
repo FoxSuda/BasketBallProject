@@ -10,11 +10,11 @@ public class ÑhangePercentValue : MonoBehaviour
 
     private void Awake()
     {
-        ChangeObjectValue();
+        ChangeObjectValue(sliderValueText.value);
     }
 
-    public void ChangeObjectValue()
+    public void ChangeObjectValue(float value)
     {
-        percentValueText.SetValueAt(sliderValueText.value);
+        percentValueText.SetValueAt(value);
     }
 }

@@ -10,10 +10,9 @@ namespace UnityTask.BasketballProject
 
         private UIContainerUIAnimator _animator;
 
-        private void Awake()
+        private void Start()
         {
             _animator = gameObject.GetComponent<UIContainerUIAnimator>();
-            _animator.InstantHide();
         }
 
         public void BackToMainMenu()

@@ -9,7 +9,7 @@ namespace UnityTask.BasketballProject
 
         public void ChangeTextCoinsCount(int coinValue)
         {
-            _coinText.text = $"Coins: {coinValue}";
+            _coinText.text = $"{coinValue}";
         }
     }
 }

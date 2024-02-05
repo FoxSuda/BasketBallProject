@@ -1,5 +1,6 @@
 using Doozy.Runtime.UIManager.Components;
 using UnityEngine;
+using static Doozy.Runtime.UIManager.Components.UIToggleGroup;
 
 namespace UnityTask.BasketballProject
 {
@@ -10,6 +11,7 @@ namespace UnityTask.BasketballProject
         [SerializeField] private CustomizationMenuManager _customizationMenuManager;
         [SerializeField] private SettingsMenuManager _settingsMenuManager;
         [SerializeField] private MainMenuManager _mainMenuManager;
+        [SerializeField] private EndGameManager _EndGameManager;
 
         [Header("MainMenu")]
         [SerializeField] private UIButton _startGameButton;
@@ -20,15 +22,23 @@ namespace UnityTask.BasketballProject
         [Header("Settings")]
         [SerializeField] private UIButton _backToMenuSettingsButton;
         [SerializeField] private UIButton _applySettingsButton;
+
         [SerializeField] private UISlider _onMasterVolumeChangeSettings;
         [SerializeField] private UISlider _onSfxVolumeChangeSettings;
         [SerializeField] private UISlider _onMusicVolumeChangeSettings;
+
+        [SerializeField] private UIButton _onMasterVolumeMuteSettings;
+        [SerializeField] private UIButton _onSfxVolumeMuteSettings;
+        [SerializeField] private UIButton _onMusicVolumeMuteSettings;
 
         [Header("Customization")]
         [SerializeField] private UIButton _backToMenuCustomizationButton;
 
         [Header("InGame")]
         [SerializeField] private UIButton _backToMenuInGameButton;
+        
+        [Header("EndGame")]
+        [SerializeField] private UIButton _backToMenuEndGameButton;
  
         private void Awake()
         {
@@ -41,15 +51,27 @@ namespace UnityTask.BasketballProject
             /* Settings */
             _backToMenuSettingsButton.onClickEvent.AddListener(BackToMainMenuSettings);
             _applySettingsButton.onClickEvent.AddListener(ApplySettings);
-            _onMasterVolumeChangeSettings.OnValueChanged.AddListener(OnMasterValueChangedSettings);
-            _onSfxVolumeChangeSettings.OnValueChanged.AddListener(OnSfxValueChangedSettings);
-            _onMusicVolumeChangeSettings.OnValueChanged.AddListener(OnMusicValueChangedSettings);
+
+            _onMasterVolumeChangeSettings.OnValueChanged.AddListener(value => OnVolumeValueChangedSettings(VolumeType.Master, value));
+            _onSfxVolumeChangeSettings.OnValueChanged.AddListener(value => OnVolumeValueChangedSettings(VolumeType.Sfx, value));
+            _onMusicVolumeChangeSettings.OnValueChanged.AddListener(value => OnVolumeValueChangedSettings(VolumeType.Music, value));
+
+            _onMasterVolumeMuteSettings.onClickEvent.AddListener(() => OnVolumeMutedSettings(VolumeType.Master));
+            _onSfxVolumeMuteSettings.onClickEvent.AddListener(() => OnVolumeMutedSettings(VolumeType.Sfx));
+            _onMusicVolumeMuteSettings.onClickEvent.AddListener(() => OnVolumeMutedSettings(VolumeType.Music));
+
+            OnVolumeValueChangedSettings(VolumeType.Master, _onMasterVolumeChangeSettings.value);
+            OnVolumeValueChangedSettings(VolumeType.Sfx, _onSfxVolumeChangeSettings.value);
+            OnVolumeValueChangedSettings(VolumeType.Music, _onMusicVolumeChangeSettings.value);
 
             /* Customization */
             _backToMenuCustomizationButton.onClickEvent.AddListener(BackToMainMenuCustomization);
 
             /* InGame */
             _backToMenuInGameButton.onClickEvent.AddListener(BackToMainMenuInGame);
+
+            /* EndGame */
+            _backToMenuEndGameButton.onClickEvent.AddListener(BackToMainMenuEndGame);
         }
 
         /* MainMenu methods */
@@ -84,19 +106,14 @@ namespace UnityTask.BasketballProject
             _settingsMenuManager.ApplyChanges();
         }
         
-        private void OnMasterValueChangedSettings(float value)
+        private void OnVolumeValueChangedSettings(VolumeType volumeType, float value)
         {
-            _settingsMenuManager.ApplyChanges();
+            _settingsMenuManager.ChangeVolumeValue(volumeType, value);
         }
-
-        private void OnSfxValueChangedSettings(float value)
+        
+        private void OnVolumeMutedSettings(VolumeType volumeType)
         {
-            _settingsMenuManager.ApplyChanges();
-        }
-
-        private void OnMusicValueChangedSettings(float value)
-        {
-            _settingsMenuManager.ApplyChanges();
+            _settingsMenuManager.MuteVolumeValidation(volumeType);
         }
 
         /* Customization methods */
@@ -110,6 +127,12 @@ namespace UnityTask.BasketballProject
         {
             _inGameMenuManager.BackToMainMenu();
         }
+        
+        /* EndGame methods */
+        private void BackToMainMenuEndGame()
+        {
+            _EndGameManager.BackToMainMenu();
+        }
 
         private void OnDestroy()
         {
@@ -122,9 +145,14 @@ namespace UnityTask.BasketballProject
             /* Settings */
             _backToMenuSettingsButton.onClickEvent.RemoveListener(BackToMainMenuSettings);
             _applySettingsButton.onClickEvent.RemoveListener(ApplySettings);
-            _onMasterVolumeChangeSettings.OnValueChanged.RemoveListener(OnMasterValueChangedSettings);
-            _onSfxVolumeChangeSettings.OnValueChanged.RemoveListener(OnSfxValueChangedSettings);
-            _onMusicVolumeChangeSettings.OnValueChanged.RemoveListener(OnMusicValueChangedSettings);
+
+            _onMasterVolumeChangeSettings.OnValueChanged.RemoveListener(value => OnVolumeValueChangedSettings(VolumeType.Master, value));
+            _onSfxVolumeChangeSettings.OnValueChanged.RemoveListener(value => OnVolumeValueChangedSettings(VolumeType.Sfx, value));
+            _onMusicVolumeChangeSettings.OnValueChanged.RemoveListener(value => OnVolumeValueChangedSettings(VolumeType.Music, value));
+
+            _onMasterVolumeMuteSettings.onClickEvent.RemoveListener(() => OnVolumeMutedSettings(VolumeType.Master));
+            _onSfxVolumeMuteSettings.onClickEvent.RemoveListener(() => OnVolumeMutedSettings(VolumeType.Sfx));
+            _onMusicVolumeMuteSettings.onClickEvent.RemoveListener(() => OnVolumeMutedSettings(VolumeType.Music));
 
             /* Customization */
             _backToMenuCustomizationButton.onClickEvent.RemoveListener(BackToMainMenuCustomization);
@@ -132,6 +160,13 @@ namespace UnityTask.BasketballProject
             /* InGame */
             _backToMenuInGameButton.onClickEvent.RemoveListener(BackToMainMenuInGame);
         }
+    }
+
+    public enum VolumeType
+    {
+        Master,
+        Sfx,
+        Music
     }
 }
 

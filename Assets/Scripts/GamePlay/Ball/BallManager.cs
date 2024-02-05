@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UnityTask.BasketballProject
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class Ball : MonoBehaviour
+    public class BallManager : MonoBehaviour
     {
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private float _throwingVelScale;
@@ -15,8 +14,9 @@ namespace UnityTask.BasketballProject
 
         public delegate void BallFallDelegate();
         public event BallFallDelegate OnBallFall;
+        public event BallFallDelegate OnBallFallWithoutCircle;
 
-        private void Start()
+        private void Awake()
         {
             ballHitCircleCheck.OnBallGetThrowCircle += BallGetThrowCircleValidation;
             rb = GetComponent<Rigidbody>();
@@ -24,10 +24,16 @@ namespace UnityTask.BasketballProject
             isGetThrowCircle = false;
         }
 
+        private void OnEnable()
+        {
+            ResetBall();
+        }
+
         public void ThrowBall(Vector3 velocity)
         {
             if (!isThrown)
             {
+                rb.freezeRotation = false;
                 rb.useGravity = true;
                 isThrown = true;
                 rb.velocity = velocity * _throwingVelScale;
@@ -38,30 +44,31 @@ namespace UnityTask.BasketballProject
         {
             if (isGetThrowCircle)
             {
-                isGetThrowCircle = false;
-                rb.useGravity = false;
-                transform.position = spawnPoint.position;
-                isThrown = false;
-                rb.velocity = Vector3.zero;
+                ResetBall();
                 ballHitCircleCheck.BallHitsValidation(false);
-                OnBallFall.Invoke();
-            } else
-            {
-                SceneManager.LoadScene("MainMenu");
+                OnBallFall?.Invoke();
             }
+            else
+            {
+                ResetBall();
+                OnBallFallWithoutCircle?.Invoke();
+            }
+        }
+
+        public void ResetBall()
+        {
+            transform.rotation = Quaternion.identity;
+            isGetThrowCircle = false;
+            rb.freezeRotation = true;
+            rb.useGravity = false;
+            transform.position = spawnPoint.position;
+            isThrown = false;
+            rb.velocity = Vector3.zero;
         }
 
         public void BallGetThrowCircleValidation()
         {
             isGetThrowCircle = true;
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            if (collision.gameObject.CompareTag("Floor"))
-            {
-                ReturnBall();
-            }
         }
 
         private void OnDestroy()

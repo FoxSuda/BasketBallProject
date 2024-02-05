@@ -9,9 +9,11 @@ namespace UnityTask.BasketballProject
         [SerializeField] private UIContainerUIAnimator _customizationObject;
         [SerializeField] private UIContainerUIAnimator _InGameMenuObject;
 
+        [SerializeField] private GameObject _gameEnviromentObject;
+
         private UIContainerUIAnimator _animator;
 
-        private void Awake()
+        private void Start()
         {
             _animator = gameObject.GetComponent<UIContainerUIAnimator>();
             _animator.Show();
@@ -19,6 +21,7 @@ namespace UnityTask.BasketballProject
 
         public void StartGame()
         {
+            _gameEnviromentObject.SetActive(true);
             _animator.Hide();
             _InGameMenuObject.Show();
         }

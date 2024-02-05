@@ -35,7 +35,7 @@ namespace UnityTask.BasketballProject
         private void TapCanceled(InputAction.CallbackContext ctx)
         {
             Vector2 dif = _tapCurrentPos - _tapStartPos;
-            gameObject.GetComponent<Ball>().ThrowBall(new Vector3(dif.x, dif.y, dif.y));
+            gameObject.GetComponent<BallManager>().ThrowBall(new Vector3(dif.x, dif.y, dif.y));
         }
 
         private void OnDestroy()

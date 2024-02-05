@@ -4,7 +4,7 @@ namespace UnityTask.BasketballProject
 {
     public class HoopPositionChanged : MonoBehaviour
     {
-        [SerializeField] private Ball _ball;
+        [SerializeField] private BallManager _ball;
 
         private void Awake()
         {
@@ -23,6 +23,11 @@ namespace UnityTask.BasketballProject
         private void OnDestroy()
         {
             _ball.OnBallFall -= ChangePosition;
+        }
+
+        private void OnDisable()
+        {
+            transform.position = new Vector3(0, transform.position.y, transform.position.z); ;
         }
     }
 }
