@@ -51,6 +51,9 @@ namespace UnityTask.BasketballProject
             else
             {
                 ResetBall();
+
+                Handheld.Vibrate();
+
                 OnBallFallWithoutCircle?.Invoke();
             }
         }
