@@ -1,4 +1,5 @@
 using Doozy.Runtime.UIManager.Animators;
+using System.Collections;
 using UnityEngine;
 
 namespace UnityTask.BasketballProject
@@ -9,7 +10,10 @@ namespace UnityTask.BasketballProject
         [SerializeField] private CoinsCountTextChange _coinsCountTextChange;
         [SerializeField] private HitCircleCountCoins _hitCircleCountCoins;
 
+        [SerializeField] private BallHitCircleCheck _ballHitCircleCheck;
+
         [SerializeField] private GameObject _gameEnviromentObject;
+        [SerializeField] private GameObject _announceTextObject;
 
         private UIContainerUIAnimator _animator;
 
@@ -17,18 +21,36 @@ namespace UnityTask.BasketballProject
         {
             _animator = gameObject.GetComponent<UIContainerUIAnimator>();
             _hitCircleCountCoins.OnCoinsCountChanged += CoinCountChange;
-        }
-
-        public void BackToMainMenu()
-        {
-            _gameEnviromentObject.SetActive(false);
-            _animator.Hide();
-            _mainMenuObject.Show();
+            _ballHitCircleCheck.OnBallGetThrowCircleTimes += AnnouncePlayer;
         }
 
         private void CoinCountChange()
         {
             _coinsCountTextChange.ChangeTextCoinsCount(_hitCircleCountCoins.GetCoinsCount());
+        }
+
+        private void AnnouncePlayer()
+        {
+            StartCoroutine(Announce());
+        }
+
+        private IEnumerator Announce()
+        {
+            _announceTextObject.SetActive(true);
+
+            yield return new WaitForSeconds(0.75f);
+
+            _announceTextObject.SetActive(false);
+        }
+
+        public void Show()
+        {
+            _animator.Show();
+        }
+
+        public void Hide()
+        {
+            _animator.Hide();
         }
     }
 }

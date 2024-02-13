@@ -13,6 +13,7 @@ namespace UnityTask.BasketballProject
 
         private void OnCollisionEnter(Collision collision)
         {
+            _ball.BallHitSound();
             if (collision.gameObject.CompareTag("Floor"))
             {
                 _ball.ReturnBall();

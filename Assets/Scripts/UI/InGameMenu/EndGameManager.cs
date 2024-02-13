@@ -25,15 +25,19 @@ namespace UnityTask.BasketballProject
             _animator.Show();
         }
 
-        public void BackToMainMenu()
-        {
-            _animator.Hide();
-            _MainMenuObject.Show();
-        }
-
         private void OnDestroy()
         {
             _ballManager.OnBallFallWithoutCircle -= EndGame;
+        }
+
+        public void Show()
+        {
+            _animator.Show();
+        }
+
+        public void Hide()
+        {
+            _animator.Hide();
         }
     }
 }

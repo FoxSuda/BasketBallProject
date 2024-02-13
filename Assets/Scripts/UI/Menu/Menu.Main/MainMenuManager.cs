@@ -42,6 +42,16 @@ namespace UnityTask.BasketballProject
         {
             Application.Quit();
         }
+
+        public void Show()
+        {
+            _animator.Show();
+        }
+
+        public void Hide()
+        {
+            _animator.Hide();
+        }
     }
 }
 

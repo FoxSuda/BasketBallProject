@@ -8,6 +8,10 @@ namespace UnityTask.BasketballProject
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private float _throwingVelScale;
         [SerializeField] private BallHitCircleCheck ballHitCircleCheck;
+
+        [SerializeField] private AudioSource _ballHitSound;
+        [SerializeField] private AudioSource _ballThrowSound;
+
         private Rigidbody rb;
         private bool isThrown;
         private bool isGetThrowCircle;
@@ -33,6 +37,7 @@ namespace UnityTask.BasketballProject
         {
             if (!isThrown)
             {
+                _ballThrowSound.Play();
                 rb.freezeRotation = false;
                 rb.useGravity = true;
                 isThrown = true;
@@ -74,9 +79,15 @@ namespace UnityTask.BasketballProject
             isGetThrowCircle = true;
         }
 
+        public void BallHitSound()
+        {
+            _ballHitSound.Play();
+        }
+
         private void OnDestroy()
         {
             ballHitCircleCheck.OnBallGetThrowCircle -= BallGetThrowCircleValidation;
+            ballHitCircleCheck.OnBallGetThrowCircle -= BallHitSound;
         }
     }
 }

@@ -1,19 +1,22 @@
 using Doozy.Runtime.UIManager.Animators;
+using Doozy.Runtime.UIManager.Components;
 using UnityEngine;
-using UnityEngine.Audio;
 
 namespace UnityTask.BasketballProject
 {
     public class SettingsMenuManager : MonoBehaviour
     {
-        [SerializeField] private AudioMixer mixer;
+        [SerializeField] private AudioManager _audioManager;
 
-        [SerializeField] private string audioChannelMaster;
-        [SerializeField] private string audioChannelSfx;
-        [SerializeField] private string audioChannelMusic;
+        [SerializeField] private UIButton _applySettingsButton;
 
-        [SerializeField] private float minVolume;
-        [SerializeField] private float maxVolume;
+        [SerializeField] private UISlider _masterVolumeSlider;
+        [SerializeField] private UISlider _sfxVolumeSlider;
+        [SerializeField] private UISlider _musicVolumeSlider;
+
+        [SerializeField] private UIButton _masterMuteButton;
+        [SerializeField] private UIButton _sfxMuteButton;
+        [SerializeField] private UIButton _musicMuteButton;
 
         [SerializeField] private UIContainerUIAnimator _mainMenuObject;
 
@@ -25,14 +28,6 @@ namespace UnityTask.BasketballProject
         [SerializeField] private ÑhangePercentValue _sfxSliderClass;
         [SerializeField] private ÑhangePercentValue _musicSliderClass;
 
-        private bool _isMasterMuted = false;
-        private bool _isSfxMuted = false;
-        private bool _isMusicMuted = false;
-
-        private float _masterValue;
-        private float _sfxValue;
-        private float _musicValue;
-
         private UIContainerUIAnimator _animator;
 
         private void Start()
@@ -40,86 +35,83 @@ namespace UnityTask.BasketballProject
             _animator = gameObject.GetComponent<UIContainerUIAnimator>();
         }
 
-        public void ChangeVolumeValue(VolumeType volumeType, float value)
+        public void Initialize()
         {
-            if (volumeType == VolumeType.Master)
-            {
-                if (!_isMasterMuted)
-                {
-                    mixer.SetFloat("Master", minVolume + (maxVolume - minVolume) * value);
-                }
-                _masterValue = value;
-                _masterSliderClass.ChangeObjectValue(value);
-            } else if (volumeType == VolumeType.Sfx)
-            {
-                if (!_isSfxMuted)
-                {
-                    mixer.SetFloat(audioChannelSfx, minVolume + (maxVolume - minVolume) * value);
-                }
-                _sfxValue = value;
-                _sfxSliderClass.ChangeObjectValue(value);
-            } else if (volumeType == VolumeType.Music)
-            {
-                if (!_isMusicMuted)
-                {
-                    mixer.SetFloat(audioChannelMusic, minVolume + (maxVolume - minVolume) * value);
-                }
-                _musicValue = value;
-                _musicSliderClass.ChangeObjectValue(value);
-            }
-        }
-        
-        public void MuteVolumeValidation(VolumeType volumeType)
-        {
-            if (volumeType == VolumeType.Master)
-            {
-                if (_isMasterMuted)
-                {
-                    mixer.SetFloat(audioChannelMaster, minVolume + (maxVolume - minVolume) * _masterValue);
-                    _isMasterMuted = false;
-                } else
-                {
-                    mixer.SetFloat(audioChannelMaster, minVolume);
-                    _isMasterMuted = true;
-                }
-            }
-            else if (volumeType == VolumeType.Sfx)
-            {
-                if (_isSfxMuted)
-                {
-                    mixer.SetFloat(audioChannelSfx, minVolume + (maxVolume - minVolume) * _sfxValue);
-                    _isSfxMuted = false;
-                }
-                else
-                {
-                    mixer.SetFloat(audioChannelSfx, minVolume);
-                    _isSfxMuted = true;
-                }
-            }
-            else if (volumeType == VolumeType.Music)
-            {
-                if (_isMusicMuted)
-                {
-                    mixer.SetFloat(audioChannelMusic, minVolume + (maxVolume - minVolume) * _musicValue);
-                    _isMusicMuted = false;
-                }
-                else
-                {
-                    mixer.SetFloat(audioChannelMusic, minVolume);
-                    _isMusicMuted = true;
-                }
-            }
+            _applySettingsButton.onClickEvent.AddListener(ApplyChanges);
+
+            _masterVolumeSlider.OnValueChanged.AddListener(MasterVolumeChanged);
+            _sfxVolumeSlider.OnValueChanged.AddListener(SfxVolumeChanged);
+            _musicVolumeSlider.OnValueChanged.AddListener(MusicVolumeChanged);
+
+            _masterMuteButton.onClickEvent.AddListener(MasterVolumeMuted);
+            _sfxMuteButton.onClickEvent.AddListener(SfxVolumeMuted);
+            _musicMuteButton.onClickEvent.AddListener(MusicVolumeMuted);
+
+            /* Didnt work */
+            //MasterVolumeChanged(_masterVolumeSlider.value);
+            //SfxVolumeChanged(_sfxVolumeSlider.value);
+            //MusicVolumeChanged(_musicVolumeSlider.value);
         }
 
-        public void BackToMainMenu()
+        public void MasterVolumeChanged(float value)
         {
-            _mainMenuObject.Show();
-            _animator.Hide();
+            _audioManager.ChangeAudioMaster(value);
+            _masterSliderClass.ChangeObjectValue(value);
+        }
+        
+        public void SfxVolumeChanged(float value)
+        {
+            _audioManager.ChangeAudioSfx(value);
+            _sfxSliderClass.ChangeObjectValue(value);
+        }
+        
+        public void MusicVolumeChanged(float value)
+        {
+            _audioManager.ChangeAudioMusic(value);
+            _musicSliderClass.ChangeObjectValue(value);
+        }
+
+        public void MasterVolumeMuted()
+        {
+            _audioManager.MuteAudioMaster();
+        }
+        
+        public void SfxVolumeMuted()
+        {
+            _audioManager.MuteAudioSfx();
+        }
+        
+        public void MusicVolumeMuted()
+        {
+            _audioManager.MuteAudioMusic();
         }
 
         public void ApplyChanges()
         {
             return;
+        }
+
+        public void Show()
+        {
+            _animator.Show();
+        }
+
+        public void Hide()
+        {
+            _animator.Hide();
+        }
+
+        private void OnDestroy()
+        {
+            _applySettingsButton.onClickEvent.RemoveListener(ApplyChanges);
+
+            _masterVolumeSlider.OnValueChanged.RemoveListener(MasterVolumeChanged);
+            _sfxVolumeSlider.OnValueChanged.RemoveListener(SfxVolumeChanged);
+            _musicVolumeSlider.OnValueChanged.RemoveListener(MusicVolumeChanged);
+
+            _masterMuteButton.onClickEvent.RemoveListener(MasterVolumeMuted);
+            _sfxMuteButton.onClickEvent.RemoveListener(SfxVolumeMuted);
+            _musicMuteButton.onClickEvent.RemoveListener(MusicVolumeMuted);
         }
     }
 }
