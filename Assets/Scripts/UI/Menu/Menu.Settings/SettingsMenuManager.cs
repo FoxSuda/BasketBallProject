@@ -47,10 +47,9 @@ namespace UnityTask.BasketballProject
             _sfxMuteButton.onClickEvent.AddListener(SfxVolumeMuted);
             _musicMuteButton.onClickEvent.AddListener(MusicVolumeMuted);
 
-            /* Didnt work */
-            //MasterVolumeChanged(_masterVolumeSlider.value);
-            //SfxVolumeChanged(_sfxVolumeSlider.value);
-            //MusicVolumeChanged(_musicVolumeSlider.value);
+            MasterVolumeChanged(_masterVolumeSlider.value);
+            SfxVolumeChanged(_sfxVolumeSlider.value);
+            MusicVolumeChanged(_musicVolumeSlider.value);
         }
 
         public void MasterVolumeChanged(float value)

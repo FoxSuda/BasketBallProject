@@ -2,20 +2,20 @@ using UnityEngine;
 
 namespace UnityTask.BasketballProject
 {
-    public class HitCircleCountCoins : MonoBehaviour
+    public class PlayerCountCoins : MonoBehaviour
     {
         [SerializeField] private BallHitCircleCheck _ballHitCircleCheck;
 
-        private int _coinsValueHit = 0;
+        private int _coinsCount = 0;
         private int _coinsValueHitMultiply = 5;
 
         public delegate void CoinsCountAdd();
         public event CoinsCountAdd OnCoinsCountChanged;
 
-        public int CoinsValueHit
+        public int CoinsCount
         {
-            get { return _coinsValueHit; }
-            set { _coinsValueHit = value; }
+            get { return _coinsCount; }
+            set { _coinsCount = value; }
         }
 
         void Start()
@@ -25,13 +25,19 @@ namespace UnityTask.BasketballProject
 
         private void AddCoinsCount()
         {
-            CoinsValueHit += _coinsValueHitMultiply;
+            CoinsCount += _coinsValueHitMultiply;
+            OnCoinsCountChanged?.Invoke();
+        }
+        
+        public void RemoveCoinsCount(int count)
+        {
+            CoinsCount -= count;
             OnCoinsCountChanged?.Invoke();
         }
         
         public int GetCoinsCount()
         {
-            return CoinsValueHit;
+            return CoinsCount;
         }
 
         private void OnDestroy()

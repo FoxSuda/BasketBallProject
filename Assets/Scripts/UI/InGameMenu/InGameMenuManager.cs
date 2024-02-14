@@ -8,7 +8,7 @@ namespace UnityTask.BasketballProject
     {
         [SerializeField] private UIContainerUIAnimator _mainMenuObject;
         [SerializeField] private CoinsCountTextChange _coinsCountTextChange;
-        [SerializeField] private HitCircleCountCoins _hitCircleCountCoins;
+        [SerializeField] private PlayerCountCoins _playerCountCoins;
 
         [SerializeField] private BallHitCircleCheck _ballHitCircleCheck;
 
@@ -20,13 +20,13 @@ namespace UnityTask.BasketballProject
         private void Start()
         {
             _animator = gameObject.GetComponent<UIContainerUIAnimator>();
-            _hitCircleCountCoins.OnCoinsCountChanged += CoinCountChange;
+            _playerCountCoins.OnCoinsCountChanged += CoinCountChange;
             _ballHitCircleCheck.OnBallGetThrowCircleTimes += AnnouncePlayer;
         }
 
         private void CoinCountChange()
         {
-            _coinsCountTextChange.ChangeTextCoinsCount(_hitCircleCountCoins.GetCoinsCount());
+            _coinsCountTextChange.ChangeTextCoinsCount(_playerCountCoins.GetCoinsCount());
         }
 
         private void AnnouncePlayer()

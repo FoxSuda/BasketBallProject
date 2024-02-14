@@ -3,9 +3,11 @@ using UnityTask.BasketballProject;
 
 public class BallSkinChange : MonoBehaviour
 {
+    [SerializeField] private PlayerCountCoins _playerCountCoins;
+
     [SerializeField] private BallManager _ballManager;
-    [SerializeField] private Material[] _ballMaterials;
-    [SerializeField] private Texture2D[] _ballImage;
+
+    [SerializeField] private SkinConfiguration[] _skinConfiguration;
 
     [SerializeField] private MeshRenderer _ballMaterial;
 
@@ -20,14 +22,14 @@ public class BallSkinChange : MonoBehaviour
     {
         _currentSkinNumber++;
 
-        if (_currentSkinNumber == _ballMaterials.Length)
+        if (_currentSkinNumber == _skinConfiguration.Length)
         {
             _currentSkinNumber = 0;
         }
 
         _currentTexture = _ballMaterial.material.mainTexture;
 
-        _nextTexture = _ballMaterials[_currentSkinNumber].mainTexture;
+        _nextTexture = _skinConfiguration[_currentSkinNumber].SkinMaterial.mainTexture;
 
         if (_currentTexture == _nextTexture)
         {
@@ -38,7 +40,7 @@ public class BallSkinChange : MonoBehaviour
             _skinToggle = false;
         }
 
-        return _ballImage[_currentSkinNumber];
+        return _skinConfiguration[_currentSkinNumber].SkinImage;
     }
     
     public Texture2D MoveToPreviousMaterial()
@@ -47,12 +49,12 @@ public class BallSkinChange : MonoBehaviour
 
         if (_currentSkinNumber == -1)
         {
-            _currentSkinNumber = _ballMaterials.Length - 1;
+            _currentSkinNumber = _skinConfiguration.Length - 1;
         }
 
         _currentTexture = _ballMaterial.material.mainTexture;
 
-        _nextTexture = _ballMaterials[_currentSkinNumber].mainTexture;
+        _nextTexture = _skinConfiguration[_currentSkinNumber].SkinMaterial.mainTexture;
 
         if (_currentTexture == _nextTexture)
         {
@@ -63,13 +65,28 @@ public class BallSkinChange : MonoBehaviour
             _skinToggle = false;
         }
 
-        return _ballImage[_currentSkinNumber];
+        return _skinConfiguration[_currentSkinNumber].SkinImage;
     }
     
     public void AcceptMaterialValidation()
     {
-        _skinToggle = true;
-        _ballMaterial.material = _ballMaterials[_currentSkinNumber];
+        if (!_skinConfiguration[_currentSkinNumber].SkinBought)
+        {
+            SkinBase skinBase = new SkinBase();
+            skinBase._skinConfiguration = _skinConfiguration[_currentSkinNumber];
+            int coinsChanged = skinBase.BuySkin(_playerCountCoins.GetCoinsCount());
+            if (coinsChanged >= 0)
+            {
+                _playerCountCoins.RemoveCoinsCount(coinsChanged);
+                _skinConfiguration[_currentSkinNumber].SkinBought = true;
+                _skinToggle = true;
+                _ballMaterial.material = _skinConfiguration[_currentSkinNumber].SkinMaterial;
+            }
+        } else
+        {
+            _skinToggle = true;
+            _ballMaterial.material = _skinConfiguration[_currentSkinNumber].SkinMaterial;
+        }
     }
     
     public bool GetSkinToggleValidation()
@@ -79,6 +96,6 @@ public class BallSkinChange : MonoBehaviour
     
     public Texture2D GetCurrentSkin()
     {
-        return _ballImage[_currentSkinNumber];
+        return _skinConfiguration[_currentSkinNumber].SkinImage;
     }
 }
