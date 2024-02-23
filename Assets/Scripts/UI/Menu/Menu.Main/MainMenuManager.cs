@@ -1,41 +1,41 @@
-using Doozy.Runtime.UIManager.Animators;
+using Doozy.Runtime.UIManager.Containers;
 using UnityEngine;
 
 namespace UnityTask.BasketballProject
 {
     public class MainMenuManager : MonoBehaviour
     {
-        [SerializeField] private UIContainerUIAnimator _settingsObject;
-        [SerializeField] private UIContainerUIAnimator _customizationObject;
-        [SerializeField] private UIContainerUIAnimator _InGameMenuObject;
+        [SerializeField] private SettingsMenuManager _settingsUiContainer;
+        [SerializeField] private CustomizationMenuManager _customizationUiContainer;
+        [SerializeField] private InGameMenuManager _InGameMenuUiContainer;
 
         [SerializeField] private GameObject _gameEnviromentObject;
 
-        private UIContainerUIAnimator _animator;
+        private UIContainer _uiContainer;
 
         private void Start()
         {
-            _animator = gameObject.GetComponent<UIContainerUIAnimator>();
-            _animator.Show();
+            _uiContainer = gameObject.GetComponent<UIContainer>();
+            _uiContainer.Show();
         }
 
         public void StartGame()
         {
             _gameEnviromentObject.SetActive(true);
-            _animator.Hide();
-            _InGameMenuObject.Show();
+            _uiContainer.Hide();
+            _InGameMenuUiContainer.Show();
         }
 
         public void OpenSettings()
         {
-            _animator.Hide();
-            _settingsObject.Show();
+            _uiContainer.Hide();
+            _settingsUiContainer.Show();
         }
 
         public void OpenCustomization()
         {
-            _animator.Hide();
-            _customizationObject.Show();
+            _uiContainer.Hide();
+            _customizationUiContainer.Show();
         }
 
         public void ExitGame()
@@ -45,12 +45,12 @@ namespace UnityTask.BasketballProject
 
         public void Show()
         {
-            _animator.Show();
+            _uiContainer.Show();
         }
 
         public void Hide()
         {
-            _animator.Hide();
+            _uiContainer.Hide();
         }
     }
 }

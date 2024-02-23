@@ -37,7 +37,10 @@ namespace UnityTask.BasketballProject
         {
             if (!isThrown)
             {
-                _ballThrowSound.Play();
+                if (gameObject == isActiveAndEnabled)
+                {
+                    _ballThrowSound.Play();
+                }
                 rb.freezeRotation = false;
                 rb.useGravity = true;
                 isThrown = true;
