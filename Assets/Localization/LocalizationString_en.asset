@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: LocalizationString_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 3cfc4ebd605f2864c8f9cfc940b8131a, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 27843039232
+    m_Localized: Master Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3406166167552
+    m_Localized: Master Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4596182487040
+    m_Localized: SFX Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4722103881728
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4893281816576
+    m_Localized: Game over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13257940340736
+    m_Localized: Volume settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 355976634109952
+    m_Localized: Other Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356041301889024
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 497937210871808
+    m_Localized: Awesome!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

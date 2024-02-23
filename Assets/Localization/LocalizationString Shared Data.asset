@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: LocalizationString Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: LocalizationString
+  m_TableCollectionNameGuidString: 3cfc4ebd605f2864c8f9cfc940b8131a
+  m_Entries:
+  - m_Id: 27843039232
+    m_Key: MasterVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3406166167552
+    m_Key: Main/Canvas/PlayerUIController/SettingsMenu/Audio/MasterVolume/MasterVolumeSlider/TextMaster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4596182487040
+    m_Key: Main/Canvas/PlayerUIController/SettingsMenu/Audio/SFXVolume/SFXVolumeSlider/TextSFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4722103881728
+    m_Key: Main/Canvas/PlayerUIController/SettingsMenu/Audio/MusicVolume/MusicVolumeSlider/TextMusic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4893281816576
+    m_Key: Main/Canvas/PlayerUIController/GameOverMenu/GameOverText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13257940340736
+    m_Key: Main/Canvas/PlayerUIController/SettingsMenu/Audio/VolumeSettingsText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 355976634109952
+    m_Key: Main/Canvas/PlayerUIController/SettingsMenu/OtherSettings/OtherSettingsText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 356041301889024
+    m_Key: Main/Canvas/PlayerUIController/SettingsMenu/OtherSettings/LanguageSettings/LanguageSettingsText
+    m_Metadata:
+      m_Items: []
+  - m_Id: 497937210871808
+    m_Key: Main/Canvas/PlayerUIController/InGameMenu/PlayerInformationHitText
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1362329272560386072
+  references:
+    version: 2
+    RefIds:
+    - rid: 1362329272560386072
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1707736221398
