@@ -31,6 +31,7 @@ namespace UnityTask.BasketballProject
 
         private void OnDisable()
         {
+            BallHitsValidation(false);
             _ballGetThrowTimes = 0;
         }
 

@@ -1,4 +1,3 @@
-using Doozy.Runtime.UIManager.Animators;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
 using UnityEngine;
@@ -20,12 +19,10 @@ namespace UnityTask.BasketballProject
         private Texture2D _skin;
 
         private UIContainer _uiContainer;
-        private UIContainerUIAnimator _uiContainerUIAnimator;
 
         private void Start()
         {
             _uiContainer = gameObject.GetComponent<UIContainer>();
-            _uiContainerUIAnimator = gameObject.GetComponent<UIContainerUIAnimator>();
 
             _leftArrowButton.onClickEvent.AddListener(PreviousSkin);
             _rightArrowButton.onClickEvent.AddListener(NextSkin);
@@ -55,23 +52,24 @@ namespace UnityTask.BasketballProject
 
         public void ToggleSkin()
         {
-            if (_toggle.isOn == false)
+            bool skinBoughtCheck = _ballSkinChange.AcceptMaterialValidation();
+            if (!skinBoughtCheck)
+            {
+                _toggle.isOn = false;
+            } else
             {
                 _toggle.isOn = true;
             }
-            _ballSkinChange.AcceptMaterialValidation();
         }
 
         public void Show()
         {
-            //_uiContainer.Show();
-            _uiContainerUIAnimator.Show();
+            _uiContainer.Show();
         }
 
         public void Hide()
         {
-            //_uiContainer.Hide();
-            _uiContainerUIAnimator.Hide();
+            _uiContainer.Hide();
         }
 
         private Sprite ChangeSprite()

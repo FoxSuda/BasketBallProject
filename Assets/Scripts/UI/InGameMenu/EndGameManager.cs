@@ -1,4 +1,4 @@
-using Doozy.Runtime.UIManager.Animators;
+using Doozy.Runtime.UIManager.Containers;
 using UnityEngine;
 
 namespace UnityTask.BasketballProject
@@ -6,23 +6,22 @@ namespace UnityTask.BasketballProject
     public class EndGameManager : MonoBehaviour
     {
         [SerializeField] private BallManager _ballManager;
-        [SerializeField] private UIContainerUIAnimator _InGameMenuObject;
-        [SerializeField] private UIContainerUIAnimator _MainMenuObject;
-        [SerializeField] private GameObject _gameEnviromentObject;
+        [SerializeField] private UIContainer _InGameMenuUiContainer;
+        [SerializeField] private GameObject _gameEnviromentUiContainer;
 
-        private UIContainerUIAnimator _animator;
+        private UIContainer _uiContainer;
 
         private void Start()
         {
-            _animator = gameObject.GetComponent<UIContainerUIAnimator>();
+            _uiContainer = gameObject.GetComponent<UIContainer>();
             _ballManager.OnBallFallWithoutCircle += EndGame;
         }
 
         private void EndGame()
         {
-            _gameEnviromentObject.SetActive(false);
-            _InGameMenuObject.Hide();
-            _animator.Show();
+            _gameEnviromentUiContainer.SetActive(false);
+            _InGameMenuUiContainer.Hide();
+            _uiContainer.Show();
         }
 
         private void OnDestroy()
@@ -32,12 +31,12 @@ namespace UnityTask.BasketballProject
 
         public void Show()
         {
-            _animator.Show();
+            _uiContainer.Show();
         }
 
         public void Hide()
         {
-            _animator.Hide();
+            _uiContainer.Hide();
         }
     }
 }

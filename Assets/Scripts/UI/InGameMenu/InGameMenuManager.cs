@@ -1,4 +1,4 @@
-using Doozy.Runtime.UIManager.Animators;
+using Doozy.Runtime.UIManager.Containers;
 using System.Collections;
 using UnityEngine;
 
@@ -6,7 +6,6 @@ namespace UnityTask.BasketballProject
 {
     public class InGameMenuManager : MonoBehaviour
     {
-        [SerializeField] private UIContainerUIAnimator _mainMenuObject;
         [SerializeField] private CoinsCountTextChange _coinsCountTextChange;
         [SerializeField] private PlayerCountCoins _playerCountCoins;
 
@@ -15,11 +14,11 @@ namespace UnityTask.BasketballProject
         [SerializeField] private GameObject _gameEnviromentObject;
         [SerializeField] private GameObject _announceTextObject;
 
-        private UIContainerUIAnimator _animator;
+        private UIContainer _uiContainer;
 
         private void Start()
         {
-            _animator = gameObject.GetComponent<UIContainerUIAnimator>();
+            _uiContainer = gameObject.GetComponent<UIContainer>();
             _playerCountCoins.OnCoinsCountChanged += CoinCountChange;
             _ballHitCircleCheck.OnBallGetThrowCircleTimes += AnnouncePlayer;
         }
@@ -45,12 +44,12 @@ namespace UnityTask.BasketballProject
 
         public void Show()
         {
-            _animator.Show();
+            _uiContainer.Show();
         }
 
         public void Hide()
         {
-            _animator.Hide();
+            _uiContainer.Hide();
         }
     }
 }

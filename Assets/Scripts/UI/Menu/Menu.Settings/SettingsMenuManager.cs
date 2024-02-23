@@ -1,5 +1,5 @@
-using Doozy.Runtime.UIManager.Animators;
 using Doozy.Runtime.UIManager.Components;
+using Doozy.Runtime.UIManager.Containers;
 using UnityEngine;
 
 namespace UnityTask.BasketballProject
@@ -18,21 +18,15 @@ namespace UnityTask.BasketballProject
         [SerializeField] private UIButton _sfxMuteButton;
         [SerializeField] private UIButton _musicMuteButton;
 
-        [SerializeField] private UIContainerUIAnimator _mainMenuObject;
-
-        [SerializeField] private MuteButtonVisual _masterVolumeMute;
-        [SerializeField] private MuteButtonVisual _sfxVolumeMute;
-        [SerializeField] private MuteButtonVisual _musicVolumeMute;
-
         [SerializeField] private ÑhangePercentValue _masterSliderClass;
         [SerializeField] private ÑhangePercentValue _sfxSliderClass;
         [SerializeField] private ÑhangePercentValue _musicSliderClass;
 
-        private UIContainerUIAnimator _animator;
+        private UIContainer _uiContainer;
 
         private void Start()
         {
-            _animator = gameObject.GetComponent<UIContainerUIAnimator>();
+            _uiContainer = gameObject.GetComponent<UIContainer>();
         }
 
         public void Initialize()
@@ -92,12 +86,12 @@ namespace UnityTask.BasketballProject
 
         public void Show()
         {
-            _animator.Show();
+            _uiContainer.Show();
         }
 
         public void Hide()
         {
-            _animator.Hide();
+            _uiContainer.Hide();
         }
 
         private void OnDestroy()

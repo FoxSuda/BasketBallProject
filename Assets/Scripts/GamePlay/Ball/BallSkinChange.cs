@@ -68,7 +68,7 @@ public class BallSkinChange : MonoBehaviour
         return _skinConfiguration[_currentSkinNumber].SkinImage;
     }
     
-    public void AcceptMaterialValidation()
+    public bool AcceptMaterialValidation()
     {
         if (!_skinConfiguration[_currentSkinNumber].SkinBought)
         {
@@ -81,11 +81,14 @@ public class BallSkinChange : MonoBehaviour
                 _skinConfiguration[_currentSkinNumber].SkinBought = true;
                 _skinToggle = true;
                 _ballMaterial.material = _skinConfiguration[_currentSkinNumber].SkinMaterial;
+                return true;
             }
+            return false;
         } else
         {
             _skinToggle = true;
             _ballMaterial.material = _skinConfiguration[_currentSkinNumber].SkinMaterial;
+            return true;
         }
     }
     
